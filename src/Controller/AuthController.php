@@ -74,11 +74,11 @@ class AuthController extends AbstractController
             ]);
 
             if ($userExists != null) {
-                throw new DataNotFoundException(["register.put.used.email"]);
+                throw new DataNotFoundException(["register.used.email"]);
             }
 
             if ($registerQuery->getPassword() != $registerQuery->getConfirmPassword()) {
-                throw new DataNotFoundException(["register.put.invalid.passwords"]);
+                throw new DataNotFoundException(["register.invalid.passwords"]);
             }
 
             $user = new User($registerQuery->getEmail(), $registerQuery->getFirstname(), $registerQuery->getLastname());
@@ -94,7 +94,7 @@ class AuthController extends AbstractController
 
             return ResponseTool::getResponse();
         } else {
-            throw new InvalidJsonDataException("register.put.invalid.query");
+            throw new InvalidJsonDataException("register.invalid.query");
         }
     }
 
