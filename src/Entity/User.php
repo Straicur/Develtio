@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -21,15 +21,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private Uuid $id;
 
-    #[ORM\Column(type: 'string',length: 180, unique: true)]
+    #[Assert\Email]
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     private string $email;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
+    #[Assert\Regex(pattern: '/^[a-z|A-Z]{2,50}$/', message: 'Bad firstname')]
     #[ORM\Column(type: 'string', length: 255)]
     private string $firstname;
 
+    #[Assert\Regex(pattern: '/^[a-z|A-Z]{2,100}$/', message: 'Bad lastname')]
     #[ORM\Column(type: 'string', length: 255)]
     private string $lastname;
 

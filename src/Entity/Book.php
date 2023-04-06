@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -18,12 +19,15 @@ class Book
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private Uuid $id;
 
+    #[Assert\Regex(pattern: '/^.{1,200}$/', message: 'Bad title')]
     #[ORM\Column(type: 'string', length: 200)]
     private string $title;
 
+    #[Assert\Regex(pattern: '/^.{1,}$/', message: 'Bad description')]
     #[ORM\Column(type: 'text')]
     private string $description;
 
+    #[Assert\Regex(pattern: '/^[0-9]{4,15}$/', message: 'Bad ISBN')]
     #[ORM\Column(type: 'string', length: 13, unique: true)]
     private string $ISBN;
 
@@ -42,7 +46,7 @@ class Book
      * @param string $description
      * @param string $ISBN
      */
-    public function __construct(string $title,string $description,string $ISBN)
+    public function __construct(string $title, string $description, string $ISBN)
     {
         $this->title = $title;
         $this->description = $description;

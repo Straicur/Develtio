@@ -6,6 +6,7 @@ use App\Repository\OpinionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OpinionRepository::class)]
 class Opinion
@@ -16,16 +17,20 @@ class Opinion
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private Uuid $id;
 
+    #[Assert\Regex(pattern: '/^[0-9]{1,1}$/', message: 'Bad rating')]
     #[ORM\Column(type: 'integer')]
     private int $rating;
 
+    #[Assert\Regex(pattern: '/^.{2,500}$/', message: 'Bad description')]
     #[ORM\Column(type: 'string', length: 500)]
     private string $description;
 
+    #[Assert\Regex(pattern: '/^.{2,100}$/', message: 'Bad author')]
     #[ORM\Column(type: 'string', length: 100)]
     private string $author;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Email]
+    #[ORM\Column(type: 'string', length: 180)]
     private string $email;
 
     #[ORM\Column(type: 'datetime')]
