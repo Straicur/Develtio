@@ -1,28 +1,57 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
-
+        - response
+        - endpoint
+        - cmd
+        - users
 when@dev:
     monolog:
         handlers:
             main:
-                type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
+                type: group
+                members: [log_error, log_debug]
+            log_error:
+                type: fingers_crossed
+                action_level: error
+                buffer_size: 100
+                excluded_http_codes: [400, 401, 403, 405]
+                handler: log_error_group
+            log_error_group:
+                type: group
+                members: [log_error_file]
+            log_error_file:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/error.log"
                 level: debug
-                channels: ["!event"]
-            # uncomment to get logging in your browser
-            # you may have to allow bigger header sizes in your Web server configuration
-            #firephp:
-            #    type: firephp
-            #    level: info
-            #chromephp:
-            #    type: chromephp
-            #    level: info
+                max_files: 2
+            log_debug:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/debug.log"
+                level: debug
+                max_files: 2
+            logging_requests:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/request.log"
+                level: debug
+                max_files: 2
+                channels: [ 'request', 'response', "endpoint" ]
             console:
                 type: console
                 process_psr_3_messages: false
                 channels: ["!event", "!doctrine", "!console"]
-
+            cmd:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/cmd.log"
+                level: debug
+                max_files: 2
+                channels: [ 'cmd' ]
+            users:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/users.log"
+                level: debug
+                max_files: 2
+                channels: [ 'users' ]
 when@test:
     monolog:
         handlers:
@@ -36,6 +65,24 @@ when@test:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
+            logging_requests:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/request.log"
+                level: debug
+                max_files: 1
+                channels: [ 'request', 'response', "endpoint" ]
+            cmd:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/cmd.log"
+                level: debug
+                max_files: 1
+                channels: [ 'cmd' ]
+            users:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/users.log"
+                level: debug
+                max_files: 1
+                channels: [ 'users' ]
 
 when@prod:
     monolog:
@@ -59,3 +106,21 @@ when@prod:
                 type: stream
                 channels: [deprecation]
                 path: php://stderr
+            logging_requests:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/request.log"
+                level: debug
+                max_files: 15
+                channels: [ 'request', 'response', "endpoint" ]
+            cmd:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/cmd.log"
+                level: debug
+                max_files: 15
+                channels: [ 'cmd' ]
+            users:
+                type: rotating_file
+                path: "%kernel.logs_dir%/%kernel.environment%/users.log"
+                level: debug
+                max_files: 15
+                channels: [ 'cmd' ]
