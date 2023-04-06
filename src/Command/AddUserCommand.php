@@ -22,10 +22,12 @@ class AddUserCommand extends Command
     private UserPasswordHasherInterface $passwordHasher;
 
     public function __construct(
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        UserPasswordHasherInterface $passwordHasher
     )
     {
         $this->userRepository = $userRepository;
+        $this->passwordHasher = $passwordHasher;
 
         parent::__construct();
     }
@@ -54,7 +56,7 @@ class AddUserCommand extends Command
         $password = md5($input->getArgument("password"));
 
         $userExists = $this->userRepository->findOneBy([
-            "email" => $email->getEmail()
+            "email" => $email
         ]);
 
         if ($userExists != null) {

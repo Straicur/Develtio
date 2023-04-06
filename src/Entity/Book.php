@@ -27,8 +27,7 @@ class Book
     #[ORM\Column(type: 'text')]
     private string $description;
 
-    // Został użyty bardziej dokładny regex ze względu na to że ISBN składa się z 10 do 13 znaków i są to albo same liczny albo liczby oddzielone myślnikami
-    #[Assert\Regex(pattern: '/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/', message: 'Bad ISBN')]
+    #[Assert\Regex(pattern: '/^[0-9]{4,13}$/', message: 'Bad ISBN')]
     #[ORM\Column(type: 'string', length: 13, unique: true)]
     private string $ISBN;
 
