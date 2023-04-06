@@ -48,7 +48,7 @@ class UserController extends AbstractController
         BookRepository          $bookRepository,
     ): Response
     {
-
+        // Wykorzystaj enuma
         return ResponseTool::getResponse();
 
     }

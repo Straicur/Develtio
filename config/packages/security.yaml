@@ -44,11 +44,17 @@ security:
             pattern: ^/api/register
             stateless: true
     access_control:
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/(login|token/refresh), roles: PUBLIC_ACCESS }
         - { path: ^/api/token/invalidate, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
-        - { path: ^/api/main, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/author/books/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/author/book/add, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/author/book/edit, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/author/book/delete, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/user/books/, roles: PUBLIC_ACCESS }
+        - { path: ^/api/user/book/detail, roles: PUBLIC_ACCESS }
+        - { path: ^/api/user/book/opinion/add, roles: PUBLIC_ACCESS }
 when@test:
     security:
         password_hashers:

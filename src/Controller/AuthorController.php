@@ -29,7 +29,7 @@ class AuthorController extends AbstractController
      * @param BookRepository $bookRepository
      * @return Response
      */
-    #[Route('/api/author/books', name: 'app_author_books', methods: ["GET"])]
+    #[Route('/api/author/books/{page}', name: 'app_author_books', methods: ["GET"])]
     #[OA\Get(
         description: "Endpoint is used to returning logged user books",
         requestBody: new OA\RequestBody(),
@@ -46,7 +46,7 @@ class AuthorController extends AbstractController
         BookRepository          $bookRepository,
     ): Response
     {
-
+        // Wykorzystaj enuma
         return ResponseTool::getResponse();
 
     }
