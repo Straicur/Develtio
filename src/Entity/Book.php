@@ -27,7 +27,8 @@ class Book
     #[ORM\Column(type: 'text')]
     private string $description;
 
-    #[Assert\Regex(pattern: '/^[0-9]{4,15}$/', message: 'Bad ISBN')]
+    // Został użyty bardziej dokładny regex ze względu na to że ISBN składa się z 10 do 13 znaków i są to albo same liczny albo liczby oddzielone myślnikami
+    #[Assert\Regex(pattern: '/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/', message: 'Bad ISBN')]
     #[ORM\Column(type: 'string', length: 13, unique: true)]
     private string $ISBN;
 
@@ -45,12 +46,14 @@ class Book
      * @param string $title
      * @param string $description
      * @param string $ISBN
+     * @param User $user
      */
-    public function __construct(string $title, string $description, string $ISBN)
+    public function __construct(string $title, string $description, string $ISBN, User $user)
     {
         $this->title = $title;
         $this->description = $description;
         $this->ISBN = $ISBN;
+        $this->user = $user;
         $this->dateAdded = new \DateTime("Now");
         $this->opinions = new ArrayCollection();
     }

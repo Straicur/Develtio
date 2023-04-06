@@ -28,11 +28,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[Assert\Regex(pattern: '/^[a-z|A-Z]{2,50}$/', message: 'Bad firstname')]
+    #[Assert\Length(min: 2, max: 50)]
+    #[Assert\Regex(pattern: '/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/', message: 'Bad firstname')]
     #[ORM\Column(type: 'string', length: 255)]
     private string $firstname;
 
-    #[Assert\Regex(pattern: '/^[a-z|A-Z]{2,100}$/', message: 'Bad lastname')]
+    #[Assert\Length(min: 2, max: 100)]
+    #[Assert\Regex(pattern: '/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/', message: 'Bad lastname')]
     #[ORM\Column(type: 'string', length: 255)]
     private string $lastname;
 
@@ -82,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**

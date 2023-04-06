@@ -17,7 +17,11 @@ class Opinion
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private Uuid $id;
 
-    #[Assert\Regex(pattern: '/^[0-9]{1,1}$/', message: 'Bad rating')]
+    #[Assert\Range(
+        notInRangeMessage: 'You must be between {{ min }} and {{ max }}',
+        min: 0,
+        max: 9,
+    )]
     #[ORM\Column(type: 'integer')]
     private int $rating;
 
@@ -45,9 +49,9 @@ class Opinion
      * @param string $description
      * @param string $author
      * @param string $email
-     * @param $book
+     * @param Book $book
      */
-    public function __construct(int $rating, string $description, string $author, string $email, $book)
+    public function __construct(int $rating, string $description, string $author, string $email, Book $book)
     {
         $this->rating = $rating;
         $this->description = $description;
