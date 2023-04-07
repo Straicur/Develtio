@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class AuthorBookModel
+class BookSuccessModel implements ModelInterface
 {
     private string $id;
     private string $title;

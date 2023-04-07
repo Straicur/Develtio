@@ -47,6 +47,24 @@ class BookRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param string $title
+     * @param string $description
+     * @return Book[]
+     */
+    public function findBooksForUser(string $title, string $description):array
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->where('b.title LIKE :title')
+            ->andWhere('b.description LIKE :description')
+            ->setParameter('title', "%" . $title . "%")
+            ->setParameter('description', "%" . $description . "%")
+            ->orderBy("b.dateAdded", "DESC");
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
 //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */

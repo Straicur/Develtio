@@ -3,16 +3,18 @@
 namespace App\Controller;
 
 use App\Annotation\AuthValidation;
+use App\Entity\Book;
 use App\Enums\PageLimit;
 use App\Exception\DataNotFoundException;
 use App\Exception\InvalidJsonDataException;
 use App\Model\AuthorBookModel;
 use App\Model\AuthorBooksSuccessModel;
+use App\Model\BookSuccessModel;
 use App\Query\AuthorBookAddQuery;
 use App\Query\AuthorBookDeleteQuery;
 use App\Query\AuthorBookEditQuery;
 use App\Repository\BookRepository;
-use App\Repository\UserRepository;
+use App\Repository\OpinionRepository;
 use App\Service\AuthorizedUserServiceInterface;
 use App\Service\RequestServiceInterface;
 use App\Tool\ResponseTool;
@@ -21,7 +23,6 @@ use OpenApi\Attributes as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[OA\Tag(name: "Author")]
@@ -29,8 +30,6 @@ class AuthorController extends AbstractController
 {
 
     /**
-     * @param Request $request
-     * @param RequestServiceInterface $requestServiceInterface
      * @param AuthorizedUserServiceInterface $authorizedUserService
      * @param BookRepository $bookRepository
      * @param int $page
@@ -50,8 +49,6 @@ class AuthorController extends AbstractController
         ]
     )]
     public function authorBooks(
-        Request                        $request,
-        RequestServiceInterface        $requestServiceInterface,
         AuthorizedUserServiceInterface $authorizedUserService,
         BookRepository                 $bookRepository,
         int                            $page
@@ -71,7 +68,13 @@ class AuthorController extends AbstractController
                 continue;
             } elseif ($index < $maxResult) {
                 $successModel->addBook(
-                    new AuthorBookModel($book->getTitle(), $book->getDescription(), $book->getISBN())
+                    new AuthorBookModel(
+                        $book->getId(),
+                        $book->getTitle(),
+                        $book->getDescription(),
+                        $book->getISBN(),
+                        $book->getDateAdded()
+                    )
                 );
             } else {
                 break;
@@ -88,13 +91,13 @@ class AuthorController extends AbstractController
     /**
      * @param Request $request
      * @param RequestServiceInterface $requestServiceInterface
-     * @param UserRepository $userRepository
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param AuthorizedUserServiceInterface $authorizedUserService
+     * @param BookRepository $bookRepository
      * @return Response
      * @throws InvalidJsonDataException
-     * @throws DataNotFoundException
      */
     #[Route('/api/author/book/add', name: 'app_author_book_add', methods: ["PUT"])]
+    #[AuthValidation(checkAuthToken: true)]
     #[OA\Put(
         description: "Endpoint is used to add new author book",
         requestBody: new OA\RequestBody(
@@ -108,20 +111,36 @@ class AuthorController extends AbstractController
             new OA\Response(
                 response: 200,
                 description: "Success",
+                content: new Model(type: BookSuccessModel::class),
             )
         ]
     )]
     public function authorBookAdd(
-        Request                 $request,
-        RequestServiceInterface $requestServiceInterface,
-        BookRepository          $bookRepository,
+        Request                        $request,
+        RequestServiceInterface        $requestServiceInterface,
+        AuthorizedUserServiceInterface $authorizedUserService,
+        BookRepository                 $bookRepository,
     ): Response
     {
         $authorBookAddQuery = $requestServiceInterface->getRequestBodyContent($request, AuthorBookAddQuery::class);
 
         if ($authorBookAddQuery instanceof AuthorBookAddQuery) {
-            // Zwraca dodaną książkę i status 201
-            return ResponseTool::getResponse(null, 201);
+
+            $user = $authorizedUserService::getAuthorizedUser();
+
+            $newBook = new Book($authorBookAddQuery->getTitle(), $authorBookAddQuery->getDescription(), $authorBookAddQuery->getISBN(), $user);
+
+            $bookRepository->add($newBook);
+
+            $successModel = new BookSuccessModel(
+                $newBook->getId(),
+                $newBook->getTitle(),
+                $newBook->getDescription(),
+                $newBook->getISBN(),
+                $newBook->getDateAdded()
+            );
+
+            return ResponseTool::getResponse($successModel, 201);
         } else {
             throw new InvalidJsonDataException("author.book.add.invalid.query");
         }
@@ -130,13 +149,14 @@ class AuthorController extends AbstractController
     /**
      * @param Request $request
      * @param RequestServiceInterface $requestServiceInterface
-     * @param UserRepository $userRepository
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param AuthorizedUserServiceInterface $authorizedUserService
+     * @param BookRepository $bookRepository
      * @return Response
-     * @throws InvalidJsonDataException
      * @throws DataNotFoundException
+     * @throws InvalidJsonDataException
      */
     #[Route('/api/author/book/edit', name: 'app_author_book_edit', methods: ["PATCH"])]
+    #[AuthValidation(checkAuthToken: true)]
     #[OA\Patch(
         description: "Endpoint is used to edit author book",
         requestBody: new OA\RequestBody(
@@ -150,20 +170,46 @@ class AuthorController extends AbstractController
             new OA\Response(
                 response: 200,
                 description: "Success",
+                content: new Model(type: BookSuccessModel::class),
             )
         ]
     )]
     public function authorBookEdit(
-        Request                 $request,
-        RequestServiceInterface $requestServiceInterface,
-        BookRepository          $bookRepository,
+        Request                        $request,
+        RequestServiceInterface        $requestServiceInterface,
+        AuthorizedUserServiceInterface $authorizedUserService,
+        BookRepository                 $bookRepository,
     ): Response
     {
         $authorBookEditQuery = $requestServiceInterface->getRequestBodyContent($request, AuthorBookEditQuery::class);
 
         if ($authorBookEditQuery instanceof AuthorBookEditQuery) {
 
-            return ResponseTool::getResponse();
+            $user = $authorizedUserService::getAuthorizedUser();
+
+            $book = $bookRepository->findOneBy([
+                "id" => $authorBookEditQuery->getBookId(),
+                "user" => $user->getId()
+            ]);
+
+            if ($book == null) {
+                throw new DataNotFoundException(["author.book.edit.cant.find.book"]);
+            }
+
+            $book->setTitle($authorBookEditQuery->getTitle());
+            $book->setDescription($authorBookEditQuery->getDescription());
+
+            $bookRepository->add($book);
+
+            $successModel = new BookSuccessModel(
+                $book->getId(),
+                $book->getTitle(),
+                $book->getDescription(),
+                $book->getISBN(),
+                $book->getDateAdded()
+            );
+
+            return ResponseTool::getResponse($successModel);
         } else {
             throw new InvalidJsonDataException("author.book.edit.invalid.query");
         }
@@ -172,15 +218,17 @@ class AuthorController extends AbstractController
     /**
      * @param Request $request
      * @param RequestServiceInterface $requestServiceInterface
-     * @param UserRepository $userRepository
-     * @param UserPasswordHasherInterface $passwordHasher
+     * @param AuthorizedUserServiceInterface $authorizedUserService
+     * @param BookRepository $bookRepository
+     * @param OpinionRepository $opinionRepository
      * @return Response
-     * @throws InvalidJsonDataException
      * @throws DataNotFoundException
+     * @throws InvalidJsonDataException
      */
     #[Route('/api/author/book/delete', name: 'app_author_book_delete', methods: ["DELETE"])]
+    #[AuthValidation(checkAuthToken: true)]
     #[OA\Delete(
-        description: "Endpoint is used to ",
+        description: "Endpoint is used to delete author book",
         requestBody: new OA\RequestBody(
             required: true,
             content: new OA\JsonContent(
@@ -196,14 +244,33 @@ class AuthorController extends AbstractController
         ]
     )]
     public function authorBookDelete(
-        Request                 $request,
-        RequestServiceInterface $requestServiceInterface,
-        BookRepository          $bookRepository,
+        Request                        $request,
+        RequestServiceInterface        $requestServiceInterface,
+        AuthorizedUserServiceInterface $authorizedUserService,
+        BookRepository                 $bookRepository,
+        OpinionRepository              $opinionRepository
     ): Response
     {
         $authorBookDeleteQuery = $requestServiceInterface->getRequestBodyContent($request, AuthorBookDeleteQuery::class);
 
         if ($authorBookDeleteQuery instanceof AuthorBookDeleteQuery) {
+
+            $user = $authorizedUserService::getAuthorizedUser();
+
+            $book = $bookRepository->findOneBy([
+                "id" => $authorBookDeleteQuery->getBookId(),
+                "user" => $user->getId()
+            ]);
+
+            if ($book == null) {
+                throw new DataNotFoundException(["author.book.delete.cant.find.book"]);
+            }
+
+            if ($opinionRepository->bookHasOpinions($book)) {
+                throw new DataNotFoundException(["author.book.delete.book.has.opinions"]);
+            }
+
+            $bookRepository->remove($book);
 
             return ResponseTool::getResponse();
         } else {
@@ -211,4 +278,3 @@ class AuthorController extends AbstractController
         }
     }
 }
-

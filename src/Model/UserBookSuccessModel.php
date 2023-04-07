@@ -2,13 +2,18 @@
 
 namespace App\Model;
 
-class AuthorBookModel
+class UserBookSuccessModel implements ModelInterface
 {
     private string $id;
     private string $title;
     private string $description;
     private string $ISBN;
     private int $dateAdded;
+
+    /**
+     * @var OpinionModel[]
+     */
+    private array $opinions = [];
 
     /**
      * @param string $id
@@ -104,5 +109,27 @@ class AuthorBookModel
     public function setDateAdded(\DateTime $dateAdded): void
     {
         $this->dateAdded = $dateAdded->getTimestamp();
+    }
+
+
+    /**
+     * @return OpinionModel[]
+     */
+    public function getOpinions(): array
+    {
+        return $this->opinions;
+    }
+
+    /**
+     * @param OpinionModel[] $opinions
+     */
+    public function setOpinions(array $opinions): void
+    {
+        $this->opinions = $opinions;
+    }
+
+    public function addOpinion(OpinionModel $opinion)
+    {
+        $this->opinions[] = $opinion;
     }
 }

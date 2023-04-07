@@ -2,10 +2,10 @@
 
 namespace App\Model;
 
-class AuthorBooksSuccessModel implements ModelInterface
+class UserBooksSuccessModel implements ModelInterface
 {
     /**
-     * @var AuthorBookModel[]
+     * @var UserBookModel[]
      */
     private array $books = [];
 
@@ -47,7 +47,7 @@ class AuthorBooksSuccessModel implements ModelInterface
     }
 
     /**
-     * @return AuthorBookModel[]
+     * @return UserBookModel[]
      */
     public function getBooks(): array
     {
@@ -55,14 +55,14 @@ class AuthorBooksSuccessModel implements ModelInterface
     }
 
     /**
-     * @param AuthorBookModel[] $books
+     * @param UserBookModel[] $books
      */
     public function setBooks(array $books): void
     {
         $this->books = $books;
     }
 
-    public function addBook(AuthorBookModel $book)
+    public function addBook(UserBookModel $book)
     {
         $this->books[] = $book;
     }

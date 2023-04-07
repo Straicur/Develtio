@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Annotation\AuthValidation;
 use App\Entity\User;
 use App\Exception\DataNotFoundException;
 use App\Exception\InvalidJsonDataException;
@@ -42,6 +43,7 @@ class AuthController extends AbstractController
      * @throws DataNotFoundException
      */
     #[Route('/api/register', name: 'app_register', methods: ["PUT"])]
+    #[AuthValidation(checkAuthToken: false)]
     #[OA\Put(
         description: "Endpoint is used to register new user",
         requestBody: new OA\RequestBody(

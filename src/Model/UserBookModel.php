@@ -2,13 +2,14 @@
 
 namespace App\Model;
 
-class AuthorBookModel
+class UserBookModel
 {
     private string $id;
     private string $title;
     private string $description;
     private string $ISBN;
     private int $dateAdded;
+    private AuthorModel $author;
 
     /**
      * @param string $id
@@ -16,14 +17,16 @@ class AuthorBookModel
      * @param string $description
      * @param string $ISBN
      * @param \DateTime $dateAdded
+     * @param AuthorModel $author
      */
-    public function __construct(string $id, string $title, string $description, string $ISBN, \DateTime $dateAdded)
+    public function __construct(string $id, string $title, string $description, string $ISBN,\DateTime $dateAdded, AuthorModel $author)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->ISBN = $ISBN;
         $this->dateAdded = $dateAdded->getTimestamp();
+        $this->author = $author;
     }
 
     /**
@@ -91,6 +94,22 @@ class AuthorBookModel
     }
 
     /**
+     * @return AuthorModel
+     */
+    public function getAuthor(): AuthorModel
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param AuthorModel $author
+     */
+    public function setAuthor(AuthorModel $author): void
+    {
+        $this->author = $author;
+    }
+
+    /**
      * @return int
      */
     public function getDateAdded(): int
@@ -105,4 +124,5 @@ class AuthorBookModel
     {
         $this->dateAdded = $dateAdded->getTimestamp();
     }
+
 }

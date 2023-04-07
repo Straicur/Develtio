@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Book;
 use App\Entity\Opinion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,6 +48,23 @@ class OpinionRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param Book $book
+     * @return bool
+     */
+    public function bookHasOpinions(Book $book): bool
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->leftJoin('o.book', 'b')
+            ->where('b.id :book')
+            ->setParameter('book', $book->getId()->toBinary());
+
+        $query = $qb->getQuery();
+
+        $res = $query->execute();
+
+        return count($res) > 0;
+    }
 //    /**
 //     * @return Opinion[] Returns an array of Opinion objects
 //     */
