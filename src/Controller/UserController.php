@@ -32,11 +32,11 @@ class UserController extends AbstractController
     /**
      * @param BookRepository $bookRepository
      * @param int $page
-     * @param string $title
-     * @param string $description
+     * @param string|null $title
+     * @param string|null $description
      * @return Response
      */
-    #[Route('/api/user/books/{page}{title}{description}', name: 'app_user_books', methods: ["GET"])]
+    #[Route('/api/user/books/{page}', name: 'app_user_books', methods: ["GET"])]
     #[AuthValidation(checkAuthToken: false)]
     #[OA\Get(
         description: "Endpoint is used to get list of books in system by not logged user",
@@ -52,10 +52,11 @@ class UserController extends AbstractController
     public function userBooks(
         BookRepository $bookRepository,
         int            $page,
-        string         $title,
-        string         $description,
+        ?string         $title = null,
+        ?string         $description = null,
     ): Response
     {
+        //todo ten get paratemer jest do przemyślenia {?title}{?description}
         $successModel = new UserBooksSuccessModel();
 
         $userBooks = $bookRepository->findBooksForUser($title, $description);

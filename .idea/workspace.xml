@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9af5130-8c74-4877-b9c3-755212a47fac" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/AbstractKernelTestCase.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AuthorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AuthorController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/AuthorBookModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/AuthorBookModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/AuthorBooksSuccessModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/AuthorBooksSuccessModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/AuthorBookAddQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/AuthorBookAddQuery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/AuthorBookDeleteQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/AuthorBookDeleteQuery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/AuthorBookEditQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/AuthorBookEditQuery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/UserBookDetailQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/UserBookDetailQuery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/UserBookOpinionAddQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/UserBookOpinionAddQuery.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/BookRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/BookRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/OpinionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/OpinionRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +184,7 @@
       <option name="presentableId" value="Default" />
       <updated>1680778884548</updated>
       <workItem from="1680778885784" duration="15060000" />
-      <workItem from="1680848246016" duration="14356000" />
+      <workItem from="1680848246016" duration="18472000" />
     </task>
     <servers />
   </component>
