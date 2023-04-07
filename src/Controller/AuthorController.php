@@ -2,13 +2,18 @@
 
 namespace App\Controller;
 
+use App\Annotation\AuthValidation;
+use App\Enums\PageLimit;
 use App\Exception\DataNotFoundException;
 use App\Exception\InvalidJsonDataException;
+use App\Model\AuthorBookModel;
+use App\Model\AuthorBooksSuccessModel;
 use App\Query\AuthorBookAddQuery;
 use App\Query\AuthorBookDeleteQuery;
 use App\Query\AuthorBookEditQuery;
 use App\Repository\BookRepository;
 use App\Repository\UserRepository;
+use App\Service\AuthorizedUserServiceInterface;
 use App\Service\RequestServiceInterface;
 use App\Tool\ResponseTool;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -26,10 +31,13 @@ class AuthorController extends AbstractController
     /**
      * @param Request $request
      * @param RequestServiceInterface $requestServiceInterface
+     * @param AuthorizedUserServiceInterface $authorizedUserService
      * @param BookRepository $bookRepository
+     * @param int $page
      * @return Response
      */
     #[Route('/api/author/books/{page}', name: 'app_author_books', methods: ["GET"])]
+    #[AuthValidation(checkAuthToken: true)]
     #[OA\Get(
         description: "Endpoint is used to returning logged user books",
         requestBody: new OA\RequestBody(),
@@ -37,18 +45,44 @@ class AuthorController extends AbstractController
             new OA\Response(
                 response: 200,
                 description: "Success",
+                content: new Model(type: AuthorBooksSuccessModel::class),
             )
         ]
     )]
     public function authorBooks(
-        Request                 $request,
-        RequestServiceInterface $requestServiceInterface,
-        BookRepository          $bookRepository,
+        Request                        $request,
+        RequestServiceInterface        $requestServiceInterface,
+        AuthorizedUserServiceInterface $authorizedUserService,
+        BookRepository                 $bookRepository,
+        int                            $page
     ): Response
     {
-        // Wykorzystaj enuma
-        return ResponseTool::getResponse();
+        $successModel = new AuthorBooksSuccessModel();
 
+        $userBooks = $bookRepository->findBy([
+            "user" => $authorizedUserService::getAuthorizedUser()->getId()
+        ]);
+
+        $minResult = $page * PageLimit::LIMIT->value;
+        $maxResult = PageLimit::LIMIT->value + $minResult;
+
+        foreach ($userBooks as $index => $book) {
+            if ($index < $minResult) {
+                continue;
+            } elseif ($index < $maxResult) {
+                $successModel->addBook(
+                    new AuthorBookModel($book->getTitle(), $book->getDescription(), $book->getISBN())
+                );
+            } else {
+                break;
+            }
+        }
+
+        $successModel->setPage($page);
+
+        $successModel->setMaxPage(ceil(count($userBooks) / PageLimit::LIMIT->value));
+
+        return ResponseTool::getResponse($successModel);
     }
 
     /**

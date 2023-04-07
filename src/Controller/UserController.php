@@ -46,6 +46,7 @@ class UserController extends AbstractController
         Request                 $request,
         RequestServiceInterface $requestServiceInterface,
         BookRepository          $bookRepository,
+        int $page
     ): Response
     {
         // Wykorzystaj enuma

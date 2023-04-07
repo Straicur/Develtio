@@ -9,9 +9,9 @@ symfony console doctrine:database:drop --force
 symfony console doctrine:database:create
 echo | symfony console doctrine:migrations:migrate
 # Dodanie użytkowników
-symfony console app:add:user "Damian" "Mosiński" "mosinskidamian11@gmail.com" "zaq12wsx"
-symfony console app:add:user "Kamil" "Kowalski" "mkamilKol@gmail.com" "zaq12wsx"
-symfony console app:add:user "Asia" "Jakaś" "asJAsk@gmail.com" "zaq12wsx"
+symfony console app:add:user "Damian" "Mosiński" "mosinskidamian11@gmail.com" "Zaq12wsx"
+symfony console app:add:user "Kamil" "Kowalski" "mkamilKol@gmail.com" "Zaq12wsx"
+symfony console app:add:user "Asia" "Jakaś" "asJAsk@gmail.com" "Zaq12wsx"
 # Książki 1 usera
 symfony console app:add:user:book "mosinskidamian11@gmail.com" "title1" "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat ultrices enim placerat molestie. Phasellus a suscipit lacus. Integer faucibus ornare turpis, eget sollicitudin erat auctor et." "9992332323112"
 symfony console app:add:user:book "mosinskidamian11@gmail.com" "title2" "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec volutpat ultrices enim placerat molestie. Phasellus a suscipit lacus. Integer faucibus ornare turpis, eget sollicitudin erat auctor et." "9992332323113"

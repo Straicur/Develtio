@@ -6,10 +6,6 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
-    App\EventListener\JWTDecodedListener:
-        tags:
-            - {name: kernel.event_listener, method: onJWTDecoded, event: lexik_jwt_authentication.on_jwt_decoded}
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -25,6 +21,6 @@ services:
             - '../src/Query/'
             - '../src/Model/'
             - '../src/Tool/'
-
+            - '../src/Annotation/'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
