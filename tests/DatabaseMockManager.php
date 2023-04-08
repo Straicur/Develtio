@@ -15,9 +15,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class DatabaseMockManager
 {
     private KernelInterface $kernel;
-    private KernelBrowser $webClient;
+    private ?KernelBrowser $webClient;
 
-    public function __construct(KernelInterface $kernel, KernelBrowser $webClient)
+    public function __construct(KernelInterface $kernel, ?KernelBrowser $webClient = null)
     {
         $this->kernel = $kernel;
         $this->webClient = $webClient;
@@ -28,7 +28,7 @@ class DatabaseMockManager
         return $this->kernel->getContainer()->get($serviceName);
     }
 
-    public function testFunc_loginUser(User $user)
+    public function testFunc_loginUser(User $user):string
     {
         $content = [
             "email" => $user->getEmail(),
@@ -39,48 +39,49 @@ class DatabaseMockManager
             ]
         ];
 
-
-        $crawler = $this->webClient->request("PUT", "/api/login_check", content: json_encode($content));
+        $crawler = $this->webClient->request("POST", "/api/login_check", server: [
+            'CONTENT_TYPE' => 'application/json'
+        ], content: json_encode($content));
 
         $response = $this->webClient->getResponse();
 
         $responseContent = json_decode($response->getContent(), true);
 
-        print_r($responseContent);
+        return $responseContent["token"];
     }
 
-    public function testFunc_addUser(string $email, string $firstname, string $lastname, string $password)
+    public function testFunc_addUser(string $email, string $firstname, string $lastname, string $password): User
     {
         $userRepository = $this->getService(UserRepository::class);
-        $passwordHasher = $this->getService(UserPasswordHasherInterface::class);
 
         $newUser = new User($email, $firstname, $lastname);
 
-        $hashedPassword = $passwordHasher->hashPassword(
-            $newUser,
-            $password
-        );
-
-        $newUser->setPassword($hashedPassword);
+        $newUser->setPassword($password);
 
         $userRepository->add($newUser);
+
+        return $newUser;
     }
 
-    public function testFunc_addBook(string $title, string $description, string $ISBN, User $user)
+    public function testFunc_addBook(string $title, string $description, string $ISBN, User $user):Book
     {
         $bookRepository = $this->getService(BookRepository::class);
 
         $newBook = new Book($title, $description, $ISBN, $user);
 
         $bookRepository->add($newBook);
+
+        return $newBook;
     }
 
-    public function testFunc_addOpinion(int $rating, string $description, string $author, string $email, Book $book)
+    public function testFunc_addOpinion(int $rating, string $description, string $author, string $email, Book $book):Opinion
     {
         $opinionRepository = $this->getService(OpinionRepository::class);
 
         $newOpinion = new Opinion($rating, $description, $author, $email, $book);
 
         $opinionRepository->add($newOpinion);
+
+        return $newOpinion;
     }
 }

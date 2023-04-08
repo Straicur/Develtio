@@ -5,10 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9af5130-8c74-4877-b9c3-755212a47fac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/AbstractKernelTestCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.test" beforeDir="false" afterPath="$PROJECT_DIR$/.env.test" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/BookRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/BookRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/OpinionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/OpinionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Command/AddBookOpinionTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Command/AddBookOpinionTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Command/AddUserBookCommandTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Command/AddUserBookCommandTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Command/AddUserCommandTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Command/AddUserCommandTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/AuthController/RegistrationTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthController/RegistrationTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookAddTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookAddTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookDeleteTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookDeleteTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookEditTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookEditTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBooksTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBooksTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/UserController/UserBookDetailTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/UserController/UserBookDetailTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/UserController/UserBookOpinionAddTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/UserController/UserBookOpinionAddTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/UserController/UserBooksTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/UserController/UserBooksTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/DatabaseMockManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/DatabaseMockManager.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +37,31 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="development" />
+                    <option name="lastUsedInstant" value="1680944815" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1680944814" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -159,7 +200,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/damian/ApkiPortfolio/Rekrutacja/Develtio/src",
+    "last_opened_file_path": "/home/damian/ApkiPortfolio/InzRefactorBack",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -169,9 +210,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config/packages/test" />
       <recent name="$PROJECT_DIR$/src/Service" />
     </key>
   </component>

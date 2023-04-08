@@ -94,7 +94,7 @@ class AuthController extends AbstractController
 
             $userRepository->add($user);
 
-            return ResponseTool::getResponse();
+            return ResponseTool::getResponse(httpCode: 201);
         } else {
             throw new InvalidJsonDataException("register.invalid.query");
         }

@@ -152,6 +152,7 @@ class UserController extends AbstractController
                 $book->getISBN(),
                 $book->getDateAdded()
             );
+
             foreach ($opinions as $opinion) {
                 $successModel->addOpinion(
                     new OpinionModel(

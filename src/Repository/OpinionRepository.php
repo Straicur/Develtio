@@ -56,7 +56,7 @@ class OpinionRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('o')
             ->leftJoin('o.book', 'b')
-            ->where('b.id :book')
+            ->where('b.id = :book')
             ->setParameter('book', $book->getId()->toBinary());
 
         $query = $qb->getQuery();
