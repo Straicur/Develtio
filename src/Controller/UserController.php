@@ -37,7 +37,12 @@ class UserController extends AbstractController
      * @param string $description
      * @return Response
      */
-    #[Route('/api/user/books/{page}-{title}-{description}', name: 'app_user_books', methods: ["GET"])]
+
+    #[Route('/api/user/books/{page}', name: 'app_user_books_page', methods: ["GET"])]
+    #[Route('/api/user/books/{page}-{title}', name: 'app_user_books_page_title', methods: ["GET"])]
+    #[Route('/api/user/books/{page}-{description}', name: 'app_user_books_page_description', methods: ["GET"])]
+    #[Route('/api/user/books/{page}-{title}-{description}', name: 'app_user_books_page_title_description', methods: ["GET"])]
+
     #[AuthValidation(checkAuthToken: false)]
     #[OA\Get(
         description: "Endpoint is used to get list of books in system by not logged user",
@@ -52,16 +57,16 @@ class UserController extends AbstractController
     )]
     public function userBooks(
         BookRepository $bookRepository,
-        int            $page,
-        string         $title,
-        string         $description,
+        string            $page,
+        ?string         $title = null,
+        ?string         $description = null,
     ): Response
     {
         $successModel = new UserBooksSuccessModel();
 
         $userBooks = $bookRepository->findBooksForUser($title, $description);
 
-        $minResult = $page * PageLimit::LIMIT->value;
+        $minResult = intval($page) * PageLimit::LIMIT->value;
         $maxResult = PageLimit::LIMIT->value + $minResult;
 
         foreach ($userBooks as $index => $book) {
