@@ -31,18 +31,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
+     * @param Request $request
      * @param BookRepository $bookRepository
-     * @param int $page
-     * @param string $title
-     * @param string $description
+     * @param string $page
      * @return Response
      */
-
-    #[Route('/api/user/books/{page}', name: 'app_user_books_page', methods: ["GET"])]
-    #[Route('/api/user/books/{page}-{title}', name: 'app_user_books_page_title', methods: ["GET"])]
-    #[Route('/api/user/books/{page}-{description}', name: 'app_user_books_page_description', methods: ["GET"])]
-    #[Route('/api/user/books/{page}-{title}-{description}', name: 'app_user_books_page_title_description', methods: ["GET"])]
-
+    #[Route('/api/user/books/{page}/', name: 'app_user_books_page', methods: ["GET"])]
+    #[Route('/api/user/books/{page}/?title={title}', name: 'app_user_books_page_title', methods: ["GET"])]
+    #[Route('/api/user/books/{page}/?description={description}', name: 'app_user_books_page_description', methods: ["GET"])]
+    #[Route('/api/user/books/{page}/?title={title}&description{description}', name: 'app_user_books_page_title_description', methods: ["GET"])]
     #[AuthValidation(checkAuthToken: false)]
     #[OA\Get(
         description: "Endpoint is used to get list of books in system by not logged user",
@@ -56,13 +53,17 @@ class UserController extends AbstractController
         ]
     )]
     public function userBooks(
+        Request        $request,
         BookRepository $bookRepository,
-        string            $page,
-        ?string         $title = null,
-        ?string         $description = null,
+        string         $page,
     ): Response
     {
         $successModel = new UserBooksSuccessModel();
+
+        //Zastosowane tak ponieważ z takim podejściem można czytać normalne flagi z url
+        //Pobnieranie tak jak page nie działa i nie widzi ich prawidłowo w urlu
+        $title = $request->query->get('title');
+        $description = $request->query->get('description');
 
         $userBooks = $bookRepository->findBooksForUser($title, $description);
 
