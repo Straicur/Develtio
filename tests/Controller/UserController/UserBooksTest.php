@@ -48,17 +48,17 @@ class UserBooksTest extends AbstractWebTest
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
         $user2 = $this->databaseMockManager->testFunc_addUser("test2@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
-        $book = $this->databaseMockManager->testFunc_addBook("Title1", "Desc", "989223933211", $user);
+        $book = $this->databaseMockManager->testFunc_addBook("Title1", "DescCCC", "989223933211", $user);
         $book = $this->databaseMockManager->testFunc_addBook("Title2", "Desc", "989223933212", $user);
         $book = $this->databaseMockManager->testFunc_addBook("Title3", "Desc", "989223933213", $user);
-        $book = $this->databaseMockManager->testFunc_addBook("Title4", "Desc", "989223933214", $user);
+        $book = $this->databaseMockManager->testFunc_addBook("Title4", "DescCCC", "989223933214", $user);
 
-        $book = $this->databaseMockManager->testFunc_addBook("Title5", "Desc", "989223933215", $user2);
+        $book = $this->databaseMockManager->testFunc_addBook("Title5", "DescCCC", "989223933215", $user2);
         $book = $this->databaseMockManager->testFunc_addBook("Title6", "Desc", "989223933216", $user2);
         $book = $this->databaseMockManager->testFunc_addBook("Title7", "Desc", "989223933217", $user2);
         $book = $this->databaseMockManager->testFunc_addBook("Title8", "Desc", "989223933218", $user2);
 
-        $crawler = self::$webClient->request("GET", "http://127.0.0.1:8000/api/user/books/0/?title=t&description=c");
+        $crawler = self::$webClient->request("GET", "http://127.0.0.1:8000/api/user/books/0/?title=t&description=CCC");
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(200);
@@ -72,7 +72,7 @@ class UserBooksTest extends AbstractWebTest
         $this->assertArrayHasKey("page", $responseContent);
         $this->assertArrayHasKey("maxPage", $responseContent);
         $this->assertArrayHasKey("books", $responseContent);
-        $this->assertCount(10, $responseContent["books"]);
+        $this->assertCount(3, $responseContent["books"]);
     }
 
     public function test_userBooksPageDescriptionSuccess()
@@ -118,11 +118,11 @@ class UserBooksTest extends AbstractWebTest
         $book = $this->databaseMockManager->testFunc_addBook("Title4", "Desc", "989223933214", $user);
 
         $book = $this->databaseMockManager->testFunc_addBook("Title5", "Desc", "989223933215", $user2);
-        $book = $this->databaseMockManager->testFunc_addBook("Title6", "Desc", "989223933216", $user2);
+        $book = $this->databaseMockManager->testFunc_addBook("TitleS6", "Desc", "989223933216", $user2);
         $book = $this->databaseMockManager->testFunc_addBook("Title7", "Desc", "989223933217", $user2);
         $book = $this->databaseMockManager->testFunc_addBook("Title8", "Desc", "989223933218", $user2);
 
-        $crawler = self::$webClient->request("GET", "http://127.0.0.1:8000/api/user/books/0/?title=t");
+        $crawler = self::$webClient->request("GET", "http://127.0.0.1:8000/api/user/books/0/?title=S");
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(200);
@@ -136,7 +136,7 @@ class UserBooksTest extends AbstractWebTest
         $this->assertArrayHasKey("page", $responseContent);
         $this->assertArrayHasKey("maxPage", $responseContent);
         $this->assertArrayHasKey("books", $responseContent);
-        $this->assertCount(10, $responseContent["books"]);
+        $this->assertCount(1, $responseContent["books"]);
     }
 
     public function test_userBooksPageSuccess()
