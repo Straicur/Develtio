@@ -48,19 +48,19 @@ class BookRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string|null $title
-     * @param string|null $description
+     * @param string $title
+     * @param string $description
      * @return Book[]
      */
-    public function findBooksForUser(string $title = null, string $description = null): array
+    public function findBooksForUser(string $title, string $description): array
     {
         $qb = $this->createQueryBuilder('b');
 
-        if ($title != null) {
+        if (!empty($title)) {
             $qb->where('b.title LIKE :title')
                 ->setParameter('title', "%" . $title . "%");
         }
-        if ($description != null) {
+        if (!empty($description)) {
             $qb->andWhere('b.description LIKE :description')
                 ->setParameter('description', "%" . $description . "%");
         }

@@ -22,7 +22,7 @@ class OpinionSuccessModel implements ModelInterface
      * @param \DateTime $dateAdded
      * @param UserBookModel $bookModel
      */
-    public function __construct( string $id, string $author, string $description, string $email, int $rating, \DateTime $dateAdded, UserBookModel $bookModel)
+    public function __construct(string $id, string $author, string $description, string $email, int $rating, \DateTime $dateAdded, UserBookModel $bookModel)
     {
         $this->id = $id;
         $this->author = $author;

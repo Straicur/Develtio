@@ -2,7 +2,6 @@
 
 namespace App\Tests\Controller\AuthorController;
 
-use App\Repository\BookRepository;
 use App\Tests\AbstractWebTest;
 
 class AuthorBooksTest extends AbstractWebTest
@@ -44,6 +43,7 @@ class AuthorBooksTest extends AbstractWebTest
         $this->assertArrayHasKey("books", $responseContent);
         $this->assertCount(4, $responseContent["books"]);
     }
+
     public function test_authorBooksPageSuccess()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
@@ -89,12 +89,13 @@ class AuthorBooksTest extends AbstractWebTest
         $this->assertArrayHasKey("books", $responseContent);
         $this->assertCount(2, $responseContent["books"]);
     }
+
     public function test_authorBooksUnauthorized()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
-        
+
         $crawler = self::$webClient->request("GET", "/api/author/books/0", server: [
             'HTTP_CONTENT_TYPE' => 'application/json',
         ]);
@@ -116,7 +117,7 @@ class AuthorBooksTest extends AbstractWebTest
         $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user1);
 
         $token = $this->databaseMockManager->testFunc_loginUser($user2);
-        
+
         $crawler = self::$webClient->request("GET", "/api/author/books/", server: [
             'HTTP_Authorization' => sprintf('%s %s', 'Bearer', $token),
             'HTTP_CONTENT_TYPE' => 'application/json',

@@ -13,7 +13,7 @@ class AuthorBookAddTest extends AbstractWebTest
 
         $this->assertInstanceOf(BookRepository::class, $bookRepository);
 
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $token = $this->databaseMockManager->testFunc_loginUser($user);
 
@@ -32,14 +32,15 @@ class AuthorBookAddTest extends AbstractWebTest
         $this->assertResponseStatusCodeSame(201);
 
         $bookAfter = $bookRepository->findOneBy([
-            "title"=>$content["title"]
+            "title" => $content["title"]
         ]);
 
         $this->assertNotNull($bookAfter);
     }
+
     public function test_authorBookAddUnauthorized()
     {
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $content = [
             "title" => "Title",
@@ -60,9 +61,10 @@ class AuthorBookAddTest extends AbstractWebTest
         $this->assertNotEmpty($responseContent);
         $this->assertJson($responseContent);
     }
+
     public function test_authorBookAddIncorrectCredentials()
     {
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $token = $this->databaseMockManager->testFunc_loginUser($user);
 
@@ -86,9 +88,10 @@ class AuthorBookAddTest extends AbstractWebTest
         $this->assertNotEmpty($responseContent);
         $this->assertJson($responseContent);
     }
+
     public function test_authorBookAddOneEmptyCredentials()
     {
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $token = $this->databaseMockManager->testFunc_loginUser($user);
 
@@ -111,9 +114,10 @@ class AuthorBookAddTest extends AbstractWebTest
         $this->assertNotEmpty($responseContent);
         $this->assertJson($responseContent);
     }
+
     public function test_authorBookAddEmptyCredentials()
     {
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $token = $this->databaseMockManager->testFunc_loginUser($user);
 

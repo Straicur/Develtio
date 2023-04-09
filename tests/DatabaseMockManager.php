@@ -10,7 +10,6 @@ use App\Repository\OpinionRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class DatabaseMockManager
 {
@@ -28,7 +27,7 @@ class DatabaseMockManager
         return $this->kernel->getContainer()->get($serviceName);
     }
 
-    public function testFunc_loginUser(User $user):string
+    public function testFunc_loginUser(User $user): string
     {
         $content = [
             "email" => $user->getEmail(),
@@ -63,7 +62,7 @@ class DatabaseMockManager
         return $newUser;
     }
 
-    public function testFunc_addBook(string $title, string $description, string $ISBN, User $user):Book
+    public function testFunc_addBook(string $title, string $description, string $ISBN, User $user): Book
     {
         $bookRepository = $this->getService(BookRepository::class);
 
@@ -74,7 +73,7 @@ class DatabaseMockManager
         return $newBook;
     }
 
-    public function testFunc_addOpinion(int $rating, string $description, string $author, string $email, Book $book):Opinion
+    public function testFunc_addOpinion(int $rating, string $description, string $author, string $email, Book $book): Opinion
     {
         $opinionRepository = $this->getService(OpinionRepository::class);
 

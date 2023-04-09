@@ -14,6 +14,7 @@ use App\Service\RequestServiceInterface;
 use App\Tool\ResponseTool;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,9 +39,10 @@ class AuthController extends AbstractController
      * @param RequestServiceInterface $requestServiceInterface
      * @param UserRepository $userRepository
      * @param UserPasswordHasherInterface $passwordHasher
+     * @param LoggerInterface $endpointLogger
      * @return Response
-     * @throws InvalidJsonDataException
      * @throws DataNotFoundException
+     * @throws InvalidJsonDataException
      */
     #[Route('/api/register', name: 'app_register', methods: ["PUT"])]
     #[AuthValidation(checkAuthToken: false)]
@@ -64,7 +66,8 @@ class AuthController extends AbstractController
         Request                     $request,
         RequestServiceInterface     $requestServiceInterface,
         UserRepository              $userRepository,
-        UserPasswordHasherInterface $passwordHasher
+        UserPasswordHasherInterface $passwordHasher,
+        LoggerInterface             $endpointLogger,
     ): Response
     {
         $registerQuery = $requestServiceInterface->getRequestBodyContent($request, RegisterQuery::class);
@@ -76,10 +79,12 @@ class AuthController extends AbstractController
             ]);
 
             if ($userExists != null) {
+                $endpointLogger->error('Email in system');
                 throw new DataNotFoundException(["register.used.email"]);
             }
 
             if ($registerQuery->getPassword() != $registerQuery->getConfirmPassword()) {
+                $endpointLogger->error('Passwords are not the same');
                 throw new DataNotFoundException(["register.invalid.passwords"]);
             }
 
@@ -96,6 +101,7 @@ class AuthController extends AbstractController
 
             return ResponseTool::getResponse(httpCode: 201);
         } else {
+            $endpointLogger->error('Invalid query');
             throw new InvalidJsonDataException("register.invalid.query");
         }
     }

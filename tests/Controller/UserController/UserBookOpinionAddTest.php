@@ -13,10 +13,10 @@ class UserBookOpinionAddTest extends AbstractWebTest
 
         $this->assertInstanceOf(OpinionRepository::class, $opinionRepository);
 
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
-        
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
         $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
-        
+
         $content = [
             "bookId" => $book->getId(),
             "email" => "test321@cos.pl",
@@ -33,23 +33,24 @@ class UserBookOpinionAddTest extends AbstractWebTest
         $this->assertResponseStatusCodeSame(201);
 
         $opinionAfter = $opinionRepository->findOneBy([
-            "email"=>$content["email"]
+            "email" => $content["email"]
         ]);
 
         $this->assertNotNull($opinionAfter);
     }
+
     public function test_userBookOpinionAddLoggedIdSuccess()
     {
         $opinionRepository = $this->getService(OpinionRepository::class);
 
         $this->assertInstanceOf(OpinionRepository::class, $opinionRepository);
 
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
-        
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
         $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
-        
+
         $token = $this->databaseMockManager->testFunc_loginUser($user);
-        
+
         $content = [
             "bookId" => $book->getId(),
             "email" => "test321@cos.pl",
@@ -67,14 +68,15 @@ class UserBookOpinionAddTest extends AbstractWebTest
         $this->assertResponseStatusCodeSame(201);
 
         $opinionAfter = $opinionRepository->findOneBy([
-            "email"=>$content["email"]
+            "email" => $content["email"]
         ]);
 
         $this->assertNotNull($opinionAfter);
     }
+
     public function test_userBookOpinionAddOneEmptyCredentials()
     {
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
 
@@ -101,7 +103,7 @@ class UserBookOpinionAddTest extends AbstractWebTest
 
     public function test_userBookOpinionAddCredentials()
     {
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
 
@@ -126,10 +128,11 @@ class UserBookOpinionAddTest extends AbstractWebTest
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
     }
+
     public function test_userBookOpinionAddEmptyCredentials()
     {
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
-        
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
         $content = [];
 
         $crawler = self::$webClient->request("PUT", "/api/user/book/opinion/add", server: [

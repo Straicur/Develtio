@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Opinion;
 use App\Repository\BookRepository;
 use App\Repository\OpinionRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,14 +21,17 @@ class AddBookOpinion extends Command
 {
     private BookRepository $bookRepository;
     private OpinionRepository $opinionRepository;
+    private LoggerInterface $cmdLogger;
 
     public function __construct(
         BookRepository    $bookRepository,
-        OpinionRepository $opinionRepository
+        OpinionRepository $opinionRepository,
+        LoggerInterface   $cmdLogger
     )
     {
         $this->bookRepository = $bookRepository;
         $this->opinionRepository = $opinionRepository;
+        $this->cmdLogger = $cmdLogger;
 
         parent::__construct();
     }
@@ -69,6 +73,8 @@ class AddBookOpinion extends Command
         $newOpinion = new Opinion($rating, $description, $author, $email, $book);
 
         $this->opinionRepository->add($newOpinion);
+
+        $this->cmdLogger->info('Opinion added Id:' . $newOpinion->getId());
 
         $io->success('Opinion added');
 

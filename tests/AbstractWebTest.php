@@ -5,10 +5,6 @@ namespace App\Tests;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-/**
- * AbstractWebTest
- *
- */
 abstract class AbstractWebTest extends WebTestCase
 {
     protected static ?KernelBrowser $webClient = null;
@@ -24,7 +20,7 @@ abstract class AbstractWebTest extends WebTestCase
         }
 
         if ($this->databaseMockManager == null) {
-            $this->databaseMockManager = new DatabaseMockManager(self::$kernel,self::$webClient);
+            $this->databaseMockManager = new DatabaseMockManager(self::$kernel, self::$webClient);
         }
 
         self::$webClient->disableReboot();

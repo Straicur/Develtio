@@ -20,6 +20,7 @@ use App\Service\RequestServiceInterface;
 use App\Tool\ResponseTool;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -93,6 +94,7 @@ class AuthorController extends AbstractController
      * @param RequestServiceInterface $requestServiceInterface
      * @param AuthorizedUserServiceInterface $authorizedUserService
      * @param BookRepository $bookRepository
+     * @param LoggerInterface $endpointLogger
      * @return Response
      * @throws InvalidJsonDataException
      */
@@ -120,6 +122,7 @@ class AuthorController extends AbstractController
         RequestServiceInterface        $requestServiceInterface,
         AuthorizedUserServiceInterface $authorizedUserService,
         BookRepository                 $bookRepository,
+        LoggerInterface                $endpointLogger
     ): Response
     {
         $authorBookAddQuery = $requestServiceInterface->getRequestBodyContent($request, AuthorBookAddQuery::class);
@@ -142,6 +145,7 @@ class AuthorController extends AbstractController
 
             return ResponseTool::getResponse($successModel, 201);
         } else {
+            $endpointLogger->error('Invalid query');
             throw new InvalidJsonDataException("author.book.add.invalid.query");
         }
     }
@@ -151,6 +155,7 @@ class AuthorController extends AbstractController
      * @param RequestServiceInterface $requestServiceInterface
      * @param AuthorizedUserServiceInterface $authorizedUserService
      * @param BookRepository $bookRepository
+     * @param LoggerInterface $endpointLogger
      * @return Response
      * @throws DataNotFoundException
      * @throws InvalidJsonDataException
@@ -179,6 +184,7 @@ class AuthorController extends AbstractController
         RequestServiceInterface        $requestServiceInterface,
         AuthorizedUserServiceInterface $authorizedUserService,
         BookRepository                 $bookRepository,
+        LoggerInterface                $endpointLogger
     ): Response
     {
         $authorBookEditQuery = $requestServiceInterface->getRequestBodyContent($request, AuthorBookEditQuery::class);
@@ -193,6 +199,7 @@ class AuthorController extends AbstractController
             ]);
 
             if ($book == null) {
+                $endpointLogger->error('Cant find user book');
                 throw new DataNotFoundException(["author.book.edit.cant.find.book"]);
             }
 
@@ -211,6 +218,7 @@ class AuthorController extends AbstractController
 
             return ResponseTool::getResponse($successModel);
         } else {
+            $endpointLogger->error('Invalid query');
             throw new InvalidJsonDataException("author.book.edit.invalid.query");
         }
     }
@@ -221,6 +229,7 @@ class AuthorController extends AbstractController
      * @param AuthorizedUserServiceInterface $authorizedUserService
      * @param BookRepository $bookRepository
      * @param OpinionRepository $opinionRepository
+     * @param LoggerInterface $endpointLogger
      * @return Response
      * @throws DataNotFoundException
      * @throws InvalidJsonDataException
@@ -248,7 +257,8 @@ class AuthorController extends AbstractController
         RequestServiceInterface        $requestServiceInterface,
         AuthorizedUserServiceInterface $authorizedUserService,
         BookRepository                 $bookRepository,
-        OpinionRepository              $opinionRepository
+        OpinionRepository              $opinionRepository,
+        LoggerInterface                $endpointLogger
     ): Response
     {
         $authorBookDeleteQuery = $requestServiceInterface->getRequestBodyContent($request, AuthorBookDeleteQuery::class);
@@ -263,10 +273,12 @@ class AuthorController extends AbstractController
             ]);
 
             if ($book == null) {
+                $endpointLogger->error('Cant find user book');
                 throw new DataNotFoundException(["author.book.delete.cant.find.book"]);
             }
 
             if ($opinionRepository->bookHasOpinions($book)) {
+                $endpointLogger->error('Book has opinions');
                 throw new DataNotFoundException(["author.book.delete.book.has.opinions"]);
             }
 
@@ -274,6 +286,7 @@ class AuthorController extends AbstractController
 
             return ResponseTool::getResponse();
         } else {
+            $endpointLogger->error('Invalid query');
             throw new InvalidJsonDataException("author.book.delete.invalid.query");
         }
     }

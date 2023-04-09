@@ -19,7 +19,7 @@ class UserBookModel
      * @param \DateTime $dateAdded
      * @param AuthorModel $author
      */
-    public function __construct(string $id, string $title, string $description, string $ISBN,\DateTime $dateAdded, AuthorModel $author)
+    public function __construct(string $id, string $title, string $description, string $ISBN, \DateTime $dateAdded, AuthorModel $author)
     {
         $this->id = $id;
         $this->title = $title;

@@ -8,11 +8,12 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class AddUserBookCommandTest extends AbstractKernelTestCase
 {
-    public function test_addUserBookSuccess(){
+    public function test_addUserBookSuccess()
+    {
 
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
-       $bookRepository = $this->getService(BookRepository::class);
+        $bookRepository = $this->getService(BookRepository::class);
 
         $this->assertInstanceOf(BookRepository::class, $bookRepository);
 
@@ -20,12 +21,12 @@ class AddUserBookCommandTest extends AbstractKernelTestCase
 
         $tester = new CommandTester($cmd);
 
-        $tester->execute(["userEmail"=>$user->getEmail(),"title"=>"Fajny","description"=>"Description","ISBN"=>"1234567890123"]);
+        $tester->execute(["userEmail" => $user->getEmail(), "title" => "Fajny", "description" => "Description", "ISBN" => "1234567890123"]);
 
         $tester->assertCommandIsSuccessful();
 
         $suerAfter = $bookRepository->findOneBy([
-            "title"=>"Fajny"
+            "title" => "Fajny"
         ]);
 
         $this->assertNotNull($suerAfter);

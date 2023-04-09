@@ -13,7 +13,7 @@ class UserBookDetailTest extends AbstractWebTest
 
         $book = $this->databaseMockManager->testFunc_addBook("Title1", "Desc", "989223933211", $user);
 
-        $opinion = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test2@cos.pl",$book);
+        $opinion = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test2@cos.pl", $book);
 
         $content = [
             "bookId" => $book->getId(),
@@ -40,6 +40,7 @@ class UserBookDetailTest extends AbstractWebTest
         $this->assertArrayHasKey("opinions", $responseContent);
         $this->assertCount(1, $responseContent["opinions"]);
     }
+
     public function test_userBookDetailLoggedInSuccess()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
@@ -47,15 +48,15 @@ class UserBookDetailTest extends AbstractWebTest
 
         $book = $this->databaseMockManager->testFunc_addBook("Title1", "Desc", "989223933211", $user);
 
-        $opinion1 = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test2@cos.pl",$book);
-        $opinion2 = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test2@cos.pl",$book);
-        $opinion3 = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test3@cos.pl",$book);
+        $opinion1 = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test2@cos.pl", $book);
+        $opinion2 = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test2@cos.pl", $book);
+        $opinion3 = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test3@cos.pl", $book);
 
         $book2 = $this->databaseMockManager->testFunc_addBook("Title1", "Desc", "989223933212", $user);
 
-        $opinion1 = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test2@cos.pl",$book2);
-        $opinion2 = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test2@cos.pl",$book2);
-        $opinion3 = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test3@cos.pl",$book2);
+        $opinion1 = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test2@cos.pl", $book2);
+        $opinion2 = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test2@cos.pl", $book2);
+        $opinion3 = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test3@cos.pl", $book2);
 
         $token = $this->databaseMockManager->testFunc_loginUser($user);
 
@@ -85,6 +86,7 @@ class UserBookDetailTest extends AbstractWebTest
         $this->assertArrayHasKey("opinions", $responseContent);
         $this->assertCount(3, $responseContent["opinions"]);
     }
+
     public function test_userBookDetailBadIdCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");

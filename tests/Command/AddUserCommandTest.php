@@ -8,7 +8,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class AddUserCommandTest extends AbstractKernelTestCase
 {
-    public function test_addUserCommandSuccess(){
+    public function test_addUserCommandSuccess()
+    {
 
         $userRepository = $this->getService(UserRepository::class);
 
@@ -18,12 +19,12 @@ class AddUserCommandTest extends AbstractKernelTestCase
 
         $tester = new CommandTester($cmd);
 
-        $tester->execute(["firstname"=>"Dam","lastname"=>"Mos","email"=>"mosinskidamian21@gmail.com","password"=>"Zaq12wsx"]);
+        $tester->execute(["firstname" => "Dam", "lastname" => "Mos", "email" => "mosinskidamian21@gmail.com", "password" => "Zaq12wsx"]);
 
         $tester->assertCommandIsSuccessful();
 
         $suerAfter = $userRepository->findOneBy([
-            "email"=>"mosinskidamian21@gmail.com"
+            "email" => "mosinskidamian21@gmail.com"
         ]);
 
         $this->assertNotNull($suerAfter);

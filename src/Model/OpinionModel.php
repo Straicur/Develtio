@@ -20,7 +20,7 @@ class OpinionModel
      * @param int $rating
      * @param \DateTime $dateAdded
      */
-    public function __construct( string $id, string $author, string $description, string $email, int $rating, \DateTime $dateAdded)
+    public function __construct(string $id, string $author, string $description, string $email, int $rating, \DateTime $dateAdded)
     {
         $this->id = $id;
         $this->author = $author;

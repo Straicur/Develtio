@@ -4,7 +4,6 @@ namespace App\EventSubscriber;
 
 use App\Annotation\AuthValidation;
 use App\Exception\AuthenticationException;
-use App\Repository\AuthenticationTokenRepository;
 use App\Repository\UserRepository;
 use App\Serializer\SerializerInterface;
 use App\Service\AuthorizedUserService;

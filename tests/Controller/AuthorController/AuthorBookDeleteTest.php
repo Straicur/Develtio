@@ -89,13 +89,14 @@ class AuthorBookDeleteTest extends AbstractWebTest
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
     }
+
     public function test_authorBookDeleteBookHasOpinionsCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
 
-        $opinion = $this->databaseMockManager->testFunc_addOpinion(10,"Desc","Author","test2@cos.pl",$book);
+        $opinion = $this->databaseMockManager->testFunc_addOpinion(10, "Desc", "Author", "test2@cos.pl", $book);
 
         $token = $this->databaseMockManager->testFunc_loginUser($user);
 
@@ -123,6 +124,7 @@ class AuthorBookDeleteTest extends AbstractWebTest
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
     }
+
     public function test_authorBookDeleteBadIdCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");

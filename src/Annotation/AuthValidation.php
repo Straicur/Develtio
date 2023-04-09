@@ -2,6 +2,8 @@
 
 namespace App\Annotation;
 
+use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
+
 /**
  * Annotation class for @AuthValidation()
  *

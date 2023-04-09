@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,14 +21,17 @@ class AddUserCommand extends Command
 {
     private UserRepository $userRepository;
     private UserPasswordHasherInterface $passwordHasher;
+    private LoggerInterface $cmdLogger;
 
     public function __construct(
-        UserRepository $userRepository,
-        UserPasswordHasherInterface $passwordHasher
+        UserRepository              $userRepository,
+        UserPasswordHasherInterface $passwordHasher,
+        LoggerInterface             $cmdLogger
     )
     {
         $this->userRepository = $userRepository;
         $this->passwordHasher = $passwordHasher;
+        $this->cmdLogger = $cmdLogger;
 
         parent::__construct();
     }
@@ -64,16 +68,18 @@ class AddUserCommand extends Command
             return Command::FAILURE;
         }
 
-        $user = new User($email, $firstname, $lastname);
+        $newUser = new User($email, $firstname, $lastname);
 
         $hashedPassword = $this->passwordHasher->hashPassword(
-            $user,
+            $newUser,
             $password
         );
 
-        $user->setPassword($hashedPassword);
+        $newUser->setPassword($hashedPassword);
 
-        $this->userRepository->add($user);
+        $this->userRepository->add($newUser);
+
+        $this->cmdLogger->info('User added Id:' . $newUser->getId());
 
         $io->success('User added');
 

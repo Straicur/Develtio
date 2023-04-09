@@ -21,6 +21,7 @@ use App\Service\RequestServiceInterface;
 use App\Tool\ResponseTool;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,11 +33,11 @@ class UserController extends AbstractController
     /**
      * @param BookRepository $bookRepository
      * @param int $page
-     * @param string|null $title
-     * @param string|null $description
+     * @param string $title
+     * @param string $description
      * @return Response
      */
-    #[Route('/api/user/books/{page}', name: 'app_user_books', methods: ["GET"])]
+    #[Route('/api/user/books/{page}-{title}-{description}', name: 'app_user_books', methods: ["GET"])]
     #[AuthValidation(checkAuthToken: false)]
     #[OA\Get(
         description: "Endpoint is used to get list of books in system by not logged user",
@@ -52,11 +53,10 @@ class UserController extends AbstractController
     public function userBooks(
         BookRepository $bookRepository,
         int            $page,
-        ?string         $title = null,
-        ?string         $description = null,
+        string         $title,
+        string         $description,
     ): Response
     {
-        //todo ten get paratemer jest do przemyślenia {?title}{?description}
         $successModel = new UserBooksSuccessModel();
 
         $userBooks = $bookRepository->findBooksForUser($title, $description);
@@ -99,6 +99,7 @@ class UserController extends AbstractController
      * @param RequestServiceInterface $requestServiceInterface
      * @param BookRepository $bookRepository
      * @param OpinionRepository $opinionRepository
+     * @param LoggerInterface $endpointLogger
      * @return Response
      * @throws DataNotFoundException
      * @throws InvalidJsonDataException
@@ -126,7 +127,8 @@ class UserController extends AbstractController
         Request                 $request,
         RequestServiceInterface $requestServiceInterface,
         BookRepository          $bookRepository,
-        OpinionRepository       $opinionRepository
+        OpinionRepository       $opinionRepository,
+        LoggerInterface         $endpointLogger
     ): Response
     {
         $userBookDetailQuery = $requestServiceInterface->getRequestBodyContent($request, UserBookDetailQuery::class);
@@ -138,6 +140,7 @@ class UserController extends AbstractController
             ]);
 
             if ($book == null) {
+                $endpointLogger->error('Cant find book with given Id');
                 throw new DataNotFoundException(["user.book.detail.cant.find.book"]);
             }
 
@@ -168,6 +171,7 @@ class UserController extends AbstractController
 
             return ResponseTool::getResponse($successModel);
         } else {
+            $endpointLogger->error('Invalid query');
             throw new InvalidJsonDataException("user.book.detail.invalid.query");
         }
     }
@@ -177,6 +181,7 @@ class UserController extends AbstractController
      * @param RequestServiceInterface $requestServiceInterface
      * @param BookRepository $bookRepository
      * @param OpinionRepository $opinionRepository
+     * @param LoggerInterface $endpointLogger
      * @return Response
      * @throws DataNotFoundException
      * @throws InvalidJsonDataException
@@ -204,7 +209,8 @@ class UserController extends AbstractController
         Request                 $request,
         RequestServiceInterface $requestServiceInterface,
         BookRepository          $bookRepository,
-        OpinionRepository       $opinionRepository
+        OpinionRepository       $opinionRepository,
+        LoggerInterface         $endpointLogger
     ): Response
     {
         $userBookOpinionAddQuery = $requestServiceInterface->getRequestBodyContent($request, UserBookOpinionAddQuery::class);
@@ -216,6 +222,7 @@ class UserController extends AbstractController
             ]);
 
             if ($book == null) {
+                $endpointLogger->error('Cant find book with given Id');
                 throw new DataNotFoundException(["user.book.opinion.cant.find.book"]);
             }
 
@@ -251,6 +258,7 @@ class UserController extends AbstractController
 
             return ResponseTool::getResponse($successModel, 201);
         } else {
+            $endpointLogger->error('Invalid query');
             throw new InvalidJsonDataException("user.book.opinion.add.invalid.query");
         }
     }

@@ -4,7 +4,6 @@ monolog:
         - response
         - endpoint
         - cmd
-        - users
 when@dev:
     monolog:
         handlers:
@@ -46,12 +45,6 @@ when@dev:
                 level: debug
                 max_files: 2
                 channels: [ 'cmd' ]
-            users:
-                type: rotating_file
-                path: "%kernel.logs_dir%/%kernel.environment%/users.log"
-                level: debug
-                max_files: 2
-                channels: [ 'users' ]
 when@test:
     monolog:
         handlers:
@@ -77,12 +70,6 @@ when@test:
                 level: debug
                 max_files: 1
                 channels: [ 'cmd' ]
-            users:
-                type: rotating_file
-                path: "%kernel.logs_dir%/%kernel.environment%/users.log"
-                level: debug
-                max_files: 1
-                channels: [ 'users' ]
 
 when@prod:
     monolog:
@@ -115,12 +102,6 @@ when@prod:
             cmd:
                 type: rotating_file
                 path: "%kernel.logs_dir%/%kernel.environment%/cmd.log"
-                level: debug
-                max_files: 15
-                channels: [ 'cmd' ]
-            users:
-                type: rotating_file
-                path: "%kernel.logs_dir%/%kernel.environment%/users.log"
                 level: debug
                 max_files: 15
                 channels: [ 'cmd' ]

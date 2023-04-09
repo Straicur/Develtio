@@ -2,16 +2,16 @@
 
 namespace App\Tests\Command;
 
-use App\Repository\BookRepository;
 use App\Repository\OpinionRepository;
 use App\Tests\AbstractKernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class AddBookOpinionTest extends AbstractKernelTestCase
 {
-    public function test_addBookOpinionTSuccess(){
-        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
-        $book = $this->databaseMockManager->testFunc_addBook("Fajny","Desc","1234567890123",$user);
+    public function test_addBookOpinionTSuccess()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+        $book = $this->databaseMockManager->testFunc_addBook("Fajny", "Desc", "1234567890123", $user);
 
         $opinionRepository = $this->getService(OpinionRepository::class);
 
@@ -21,13 +21,13 @@ class AddBookOpinionTest extends AbstractKernelTestCase
 
         $tester = new CommandTester($cmd);
 
-        $tester->execute(["bookTitle"=>$book->getTitle(),"rating"=>10,"description"=>"Aescription","author"=>"Dam","email"=>"mosinskidamian21@gmail.com"]);
+        $tester->execute(["bookTitle" => $book->getTitle(), "rating" => 10, "description" => "Aescription", "author" => "Dam", "email" => "mosinskidamian21@gmail.com"]);
 
         $tester->assertCommandIsSuccessful();
 
 
         $suerAfter = $opinionRepository->findOneBy([
-            "email"=>"mosinskidamian21@gmail.com"
+            "email" => "mosinskidamian21@gmail.com"
         ]);
 
         $this->assertNotNull($suerAfter);

@@ -36,6 +36,7 @@ class RegisterQuery
     #[Assert\Type(type: "string")]
     #[Assert\Regex(pattern: '/^(?=.{7,255}$)(?=.*[a-z])(?=.*[A-Z]).*$/', message: 'Bad confirm password')]
     private string $confirmPassword;
+
     /**
      * @return string
      */

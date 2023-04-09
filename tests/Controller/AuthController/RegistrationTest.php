@@ -27,14 +27,15 @@ class RegistrationTest extends AbstractWebTest
         $this->assertResponseStatusCodeSame(201);
 
         $userAfter = $userRepository->findOneBy([
-            "email"=>$content["email"]
+            "email" => $content["email"]
         ]);
 
         $this->assertNotNull($userAfter);
     }
+
     public function test_registrationIncorrectUsedEmailExistsCredentials(): void
     {
-        $this->databaseMockManager->testFunc_addUser("test@cos.pl","Dam","Mos","Zaq12wsx");
+        $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
         $content = [
             "email" => "test@cos.pl",
@@ -56,6 +57,7 @@ class RegistrationTest extends AbstractWebTest
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
     }
+
     public function test_registrationIncorrectPasswordCredentials(): void
     {
         $content = [
@@ -78,6 +80,7 @@ class RegistrationTest extends AbstractWebTest
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
     }
+
     public function test_registrationOneEmptyRequest()
     {
         $content = [
@@ -97,6 +100,7 @@ class RegistrationTest extends AbstractWebTest
         $this->assertNotEmpty($responseContent);
         $this->assertJson($responseContent);
     }
+
     public function test_registrationEmptyRequest()
     {
         $content = [];

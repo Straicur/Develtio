@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use App\Repository\UserRepository;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,14 +21,17 @@ class AddUserBookCommand extends Command
 {
     private BookRepository $bookRepository;
     private UserRepository $userRepository;
+    private LoggerInterface $cmdLogger;
 
     public function __construct(
-        BookRepository $bookRepository,
-        UserRepository $userRepository
+        BookRepository  $bookRepository,
+        UserRepository  $userRepository,
+        LoggerInterface $cmdLogger
     )
     {
         $this->bookRepository = $bookRepository;
         $this->userRepository = $userRepository;
+        $this->cmdLogger = $cmdLogger;
 
         parent::__construct();
     }
@@ -67,6 +71,8 @@ class AddUserBookCommand extends Command
         $newBook = new Book($title, $description, $ISBN, $user);
 
         $this->bookRepository->add($newBook);
+
+        $this->cmdLogger->info('Book added Id:' . $newBook->getId());
 
         $io->success('Book added');
 
