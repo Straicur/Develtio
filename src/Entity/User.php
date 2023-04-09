@@ -30,12 +30,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\Length(min: 2, max: 50)]
     #[Assert\Regex(pattern: '/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/', message: 'Bad firstname')]
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 50)]
     private string $firstname;
 
     #[Assert\Length(min: 2, max: 100)]
     #[Assert\Regex(pattern: '/^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*/', message: 'Bad lastname')]
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 100)]
     private string $lastname;
 
     /**

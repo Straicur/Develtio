@@ -28,13 +28,13 @@ class RegisterQuery
     #[Assert\NotNull(message: "Password is null")]
     #[Assert\NotBlank(message: "Password is empty")]
     #[Assert\Type(type: "string")]
-    #[Assert\Regex(pattern: '/^(?=.{7,255}$)(?=.*[a-z])(?=.*[A-Z]).*$/', message: 'Bad password')]
+    #[Assert\Regex(pattern: '/^(?=.{7,250}$)(?=.*[a-z])(?=.*[A-Z]).*$/', message: 'Bad password')]
     private string $password;
 
     #[Assert\NotNull(message: "Confirm password is null")]
     #[Assert\NotBlank(message: "Confirm password is empty")]
     #[Assert\Type(type: "string")]
-    #[Assert\Regex(pattern: '/^(?=.{7,255}$)(?=.*[a-z])(?=.*[A-Z]).*$/', message: 'Bad confirm password')]
+    #[Assert\Regex(pattern: '/^(?=.{7,250}$)(?=.*[a-z])(?=.*[A-Z]).*$/', message: 'Bad confirm password')]
     private string $confirmPassword;
 
     /**
