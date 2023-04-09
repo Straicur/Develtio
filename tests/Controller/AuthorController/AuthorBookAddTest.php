@@ -62,7 +62,61 @@ class AuthorBookAddTest extends AbstractWebTest
         $this->assertJson($responseContent);
     }
 
-    public function test_authorBookAddIncorrectCredentials()
+    public function test_authorBookAddBadTitle()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $token = $this->databaseMockManager->testFunc_loginUser($user);
+
+        $content = [
+            "title" => "T",
+            "description" => "Desc",
+            "ISBN" => "989-2239-121",
+        ];
+
+        $crawler = self::$webClient->request("PUT", "/api/author/book/add", server: [
+            'HTTP_Authorization' => sprintf('%s %s', 'Bearer', $token),
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_authorBookAddBadDescription()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $token = $this->databaseMockManager->testFunc_loginUser($user);
+
+        $content = [
+            "title" => "Title",
+            "description" => " ",
+            "ISBN" => "989-2239-12",
+        ];
+
+        $crawler = self::$webClient->request("PUT", "/api/author/book/add", server: [
+            'HTTP_Authorization' => sprintf('%s %s', 'Bearer', $token),
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_authorBookAddBadISBN()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 

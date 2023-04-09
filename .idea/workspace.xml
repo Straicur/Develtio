@@ -5,39 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3de1b43c-ebc3-47f2-81a4-82bbc74e81ea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Develtio.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Develtio.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/monolog.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Annotation/AuthValidation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Annotation/AuthValidation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/AddBookOpinion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/AddBookOpinion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/AddUserBookCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/AddUserBookCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Command/AddUserCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/AddUserCommand.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/AuthorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AuthorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventSubscriber/AuthValidationSubscriber.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventSubscriber/AuthValidationSubscriber.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/OpinionModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/OpinionModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/OpinionSuccessModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/OpinionSuccessModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/UserBookModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/UserBookModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Query/RegisterQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Query/RegisterQuery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/BookRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/BookRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/AbstractWebTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/AbstractWebTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Command/AddBookOpinionTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Command/AddBookOpinionTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Command/AddUserBookCommandTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Command/AddUserBookCommandTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Command/AddUserCommandTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Command/AddUserCommandTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Controller/AuthController/RegistrationTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthController/RegistrationTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookAddTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookAddTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookDeleteTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookDeleteTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBooksTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBooksTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Controller/UserController/UserBookDetailTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/UserController/UserBookDetailTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Controller/UserController/UserBookOpinionAddTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/UserController/UserBookOpinionAddTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Controller/UserController/UserBooksTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/UserController/UserBooksTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/DatabaseMockManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/DatabaseMockManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookEditTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Controller/AuthorController/AuthorBookEditTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +186,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/damian/ApkiPortfolio/Rekrutacja/DeveltioBad",
+    "last_opened_file_path": "/home/damian/ApkiPortfolio/Rekrutacja/Develtio/src/Controller",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -222,6 +194,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Controller" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -230,7 +207,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1681036673403</updated>
-      <workItem from="1681036674631" duration="3425000" />
+      <workItem from="1681036674631" duration="6031000" />
     </task>
     <servers />
   </component>

@@ -99,7 +99,7 @@ class AuthorBookEditTest extends AbstractWebTest
         $this->assertArrayHasKey("data", $responseContent);
     }
 
-    public function test_authorBookEditBadIdCredentials()
+    public function test_authorBookEditNotExistingIdCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
@@ -127,6 +127,90 @@ class AuthorBookEditTest extends AbstractWebTest
         $this->assertIsArray($responseContent);
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
+    }
+
+    public function test_authorBookEditBadIdCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $token = $this->databaseMockManager->testFunc_loginUser($user);
+
+        $content = [
+            "bookId" => "6666c4e-16e6-1ecc-990-a7e8b0073d3b",
+            "title" => "Title",
+            "description" => "Desc"
+        ];
+
+        $crawler = self::$webClient->request("PATCH", "/api/author/book/edit", server: [
+            'HTTP_Authorization' => sprintf('%s %s', 'Bearer', $token),
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_authorBookEditBadDescriptionCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $token = $this->databaseMockManager->testFunc_loginUser($user);
+
+        $content = [
+            "bookId" => "66666c4e-16e6-1ecc-9890-a7e8b0073d3b",
+            "title" => "Title",
+            "description" => ""
+        ];
+
+        $crawler = self::$webClient->request("PATCH", "/api/author/book/edit", server: [
+            'HTTP_Authorization' => sprintf('%s %s', 'Bearer', $token),
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_authorBookEditBadTitleCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $token = $this->databaseMockManager->testFunc_loginUser($user);
+
+        $content = [
+            "bookId" => "66666c4e-16e6-1ecc-9890-a7e8b0073d3b",
+            "title" => "T",
+            "description" => "Desc"
+        ];
+
+        $crawler = self::$webClient->request("PATCH", "/api/author/book/edit", server: [
+            'HTTP_Authorization' => sprintf('%s %s', 'Bearer', $token),
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
     }
 
     public function test_authorBookEditEmptyCredentials()

@@ -101,7 +101,119 @@ class UserBookOpinionAddTest extends AbstractWebTest
         $this->assertJson($responseContent);
     }
 
-    public function test_userBookOpinionAddCredentials()
+    public function test_userBookOpinionAddBadEmailCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $content = [
+            "bookId" => "66666c4e-16e6-1ecc-9890-a7e8b0073d3b",
+            "email" => "test321@.pl",
+            "description" => "Description",
+            "author" => "Author",
+            "rating" => 9,
+        ];
+
+        $crawler = self::$webClient->request("PUT", "/api/user/book/opinion/add", server: [
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_userBookOpinionAddBadDescriptionCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $content = [
+            "bookId" => "66666c4e-16e6-1ecc-9890-a7e8b0073d3b",
+            "email" => "test321@cos.pl",
+            "description" => "",
+            "author" => "Author",
+            "rating" => 9,
+        ];
+
+        $crawler = self::$webClient->request("PUT", "/api/user/book/opinion/add", server: [
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_userBookOpinionAddBadAuthorCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $content = [
+            "bookId" => "66666c4e-16e6-1ecc-9890-a7e8b0073d3b",
+            "email" => "test321@cos.pl",
+            "description" => "Description",
+            "author" => "A",
+            "rating" => 9,
+        ];
+
+        $crawler = self::$webClient->request("PUT", "/api/user/book/opinion/add", server: [
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_userBookOpinionAddBadRatingCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
+
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $content = [
+            "bookId" => "66666c4e-16e6-1ecc-9890-a7e8b0073d3b",
+            "email" => "test321@cos.pl",
+            "description" => "Description",
+            "author" => "Author",
+            "rating" => 10,
+        ];
+
+        $crawler = self::$webClient->request("PUT", "/api/user/book/opinion/add", server: [
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
+
+    public function test_userBookOpinionAddNotExistingIdCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 

@@ -125,7 +125,7 @@ class AuthorBookDeleteTest extends AbstractWebTest
         $this->assertArrayHasKey("data", $responseContent);
     }
 
-    public function test_authorBookDeleteBadIdCredentials()
+    public function test_authorBookDeleteNotExistingIdCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
@@ -150,7 +150,29 @@ class AuthorBookDeleteTest extends AbstractWebTest
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
     }
+    public function test_authorBookDeleteBadIdCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
+        $token = $this->databaseMockManager->testFunc_loginUser($user);
+
+        $content = [
+            "bookId" => "6666c4e-16e6-1ecc-9890-a7e80073d3b",
+        ];
+
+        $crawler = self::$webClient->request("DELETE", "/api/author/book/delete", server: [
+            'HTTP_Authorization' => sprintf('%s %s', 'Bearer', $token),
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
     public function test_authorBookDeleteEmptyCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");

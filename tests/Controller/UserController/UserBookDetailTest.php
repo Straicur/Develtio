@@ -87,7 +87,7 @@ class UserBookDetailTest extends AbstractWebTest
         $this->assertCount(3, $responseContent["opinions"]);
     }
 
-    public function test_userBookDetailBadIdCredentials()
+    public function test_userBookDetailNotExistingIdCredentials()
     {
         $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
@@ -111,7 +111,28 @@ class UserBookDetailTest extends AbstractWebTest
         $this->assertArrayHasKey("error", $responseContent);
         $this->assertArrayHasKey("data", $responseContent);
     }
+    public function test_userBookDetailBadIdCredentials()
+    {
+        $user = $this->databaseMockManager->testFunc_addUser("test@cos.pl", "Dam", "Mos", "Zaq12wsx");
 
+        $book = $this->databaseMockManager->testFunc_addBook("Title", "Desc", "989223933212", $user);
+
+        $content = [
+            "bookId" => "666664e-16e6-1ecc-9890-a7e8b073d3b",
+        ];
+
+        $crawler = self::$webClient->request("POST", "/api/user/book/detail", server: [
+            'HTTP_CONTENT_TYPE' => 'application/json',
+        ], content: json_encode($content));
+
+        $this->assertResponseStatusCodeSame(400);
+
+        $responseContent = self::$webClient->getResponse()->getContent();
+
+        $this->assertNotNull($responseContent);
+        $this->assertNotEmpty($responseContent);
+        $this->assertJson($responseContent);
+    }
     public function test_userBookDetailEmptyCredentials()
     {
         $user1 = $this->databaseMockManager->testFunc_addUser("test1@cos.pl", "Dam", "Mos", "Zaq12wsx");
