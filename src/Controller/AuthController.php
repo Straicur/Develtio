@@ -43,6 +43,12 @@ class AuthController extends AbstractController
      * @return Response
      * @throws DataNotFoundException
      * @throws InvalidJsonDataException
+     *
+     * Endpoint odpowiadający za rejestrację użytkownika. Po podaniu odpowiednich danych w query sprawdza czy nie istnieje
+     * już jakiś użytkownik z podanym mailem(Jeśli tak to rzuca 404), następnie czy podany hasła są identyczne(tu również jeśli nie to 404) i
+     * na koniec tworzy endcję oraz hashuje podane hasło do odpowiedniej formy. Przy pomocy repository w systemie dodawane do bazy są encje.
+     * W query natomiast są bardziej precyzyjne sprawdzenia danych które będą zmieniane na encje w bazie. Większość jest w regexie bo mocno
+     * to uprawszcza i nie trzeba dodawać kilkunastu assercji.
      */
     #[Route('/api/register', name: 'app_register', methods: ["PUT"])]
     #[AuthValidation(checkAuthToken: false)]

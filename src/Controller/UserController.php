@@ -35,6 +35,10 @@ class UserController extends AbstractController
      * @param BookRepository $bookRepository
      * @param string $page
      * @return Response
+     *
+     * Endpoint pobierający książki w systemie, możliwe jest pobranie bez szukania, szukanie po tytule i opisie oraz pojedynczo.
+     * Posiada kilka route żeby obsłużyć wszystkie z tych opcji. Samo szuakanie zamknięte jest w query oraz sortowane są
+     * po dacie dodania.
      */
     #[Route('/api/user/books/{page}/', name: 'app_user_books_page', methods: ["GET"])]
     #[Route('/api/user/books/{page}/?title={title}', name: 'app_user_books_page_title', methods: ["GET"])]
@@ -61,7 +65,7 @@ class UserController extends AbstractController
         $successModel = new UserBooksSuccessModel();
 
         //Zastosowane tak ponieważ z takim podejściem można czytać normalne flagi z url
-        //Pobnieranie tak jak page nie działa i nie widzi ich prawidłowo w urlu
+        //Pobranie tak jak page nie działa i nie widzi ich prawidłowo w urlu
         $title = $request->query->get('title');
         $description = $request->query->get('description');
 
@@ -109,6 +113,8 @@ class UserController extends AbstractController
      * @return Response
      * @throws DataNotFoundException
      * @throws InvalidJsonDataException
+     *
+     * Endpoint pobierający detale książki po jej Id. Zwracane oprócz detali książki są też opinie podpięte do niej.
      */
     #[Route('/api/user/book/detail', name: 'app_user_book_detail', methods: ["POST"])]
     #[AuthValidation(checkAuthToken: false)]
@@ -191,6 +197,9 @@ class UserController extends AbstractController
      * @return Response
      * @throws DataNotFoundException
      * @throws InvalidJsonDataException
+     *
+     * Endpoint umożliwiający dodanie opini osobie nie zalogowanej. Po dodaniu opini zwraca ją wraz z detalami książki
+     * oraz jej autora.
      */
     #[Route('/api/user/book/opinion/add', name: 'app_user_book_opinion_add', methods: ["PUT"])]
     #[AuthValidation(checkAuthToken: false)]

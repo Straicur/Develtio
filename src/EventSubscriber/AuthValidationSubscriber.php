@@ -15,7 +15,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * AuthValidationSubscriber
+ * EventSubscriber ten jest wykorzystywany do sprawdzania czy użytkownik dodał token autoryzacyjny dla endpoiuntów z
+ * dodaną wcześniej annotacją AuthValidation
+ * Jeśli ta annotacja ustawiona jest na true to sprawdzany jest token i jeśli istnieje to szukany jest użytkownik po emailu
+ * Email tern jest wyciągany z tokenta JWT z token storage jako jego identyfikator
  *
  */
 class AuthValidationSubscriber implements EventSubscriberInterface

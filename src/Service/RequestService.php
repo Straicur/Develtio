@@ -8,6 +8,11 @@ use App\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * Jest to prosty serwis który odpowiada za sprawdzenie czy request zgadza się z podaną klasą query i jej asercjami
+ * Jeśli tak to deserializuje odebrany request na podstawie podanej klasy a jeśli coś będzie błędne to wyrzuca odpowiedni
+ * błąd 400 z opisem
+ */
 class RequestService implements RequestServiceInterface
 {
     private ValidatorInterface $validator;

@@ -6,6 +6,10 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
+/**
+ * Jest to serializer wykorzystywany w systemie głównie do serializowania responsów przy pomocy klass modeli
+ * oraz deserializowania requestów przy pomocy klass query
+ */
 class JsonSerializer implements SerializerInterface
 {
     private array $encoders;

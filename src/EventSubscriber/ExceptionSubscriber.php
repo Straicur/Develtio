@@ -9,6 +9,10 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * EventSubscriber ten jest wykorzystywany do wychwytywania NotFoundHttpExceptions i parsowania go na odpwoiednio staaworzony exception
+ * Jest to bardziej przykład i można by go rozszerzyć aby wyłapytał dużo większą ilość exceptions
+ */
 class ExceptionSubscriber implements EventSubscriberInterface
 {
     public function onKernelException(ExceptionEvent $event): void

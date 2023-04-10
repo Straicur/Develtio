@@ -5,6 +5,9 @@ namespace App\Service;
 use App\Entity\User;
 use App\Exception\AuthenticationException;
 
+/**
+ * Jest to serwis wykorzystywany do przechowywania zalogowanego użytkownika już po znalezieniu go w AuthValidationSubscriber
+ */
 class AuthorizedUserService implements AuthorizedUserServiceInterface
 {
     private static ?User $authorizedUser = null;

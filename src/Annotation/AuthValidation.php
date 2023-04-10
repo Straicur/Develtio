@@ -11,6 +11,7 @@ use Doctrine\Common\Annotations\Annotation\NamedArgumentConstructor;
  * @NamedArgumentConstructor
  * @Target({"METHOD"})
  *
+ * Annotacja ta jest wykorzystywana do pobierania użytkownika po jego emailu jeśli jest zalogowany
  */
 #[\Attribute(\Attribute::TARGET_METHOD)]
 class AuthValidation

@@ -11,6 +11,10 @@ use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpKernel\KernelInterface;
 
+/**
+ * Jest to klassa która odpowiada za tworzenie encji dla testów. Encje te dodawane są bazy testowej i po przejściu pojedynczej
+ * metody są usuwane. Każdy test ma tworzone dane tylko dla siebie.
+ */
 class DatabaseMockManager
 {
     private KernelInterface $kernel;

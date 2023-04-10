@@ -51,6 +51,8 @@ class OpinionRepository extends ServiceEntityRepository
     /**
      * @param Book $book
      * @return bool
+     *
+     * Przykład prostego zapytania które wchodzi głębiej w połączenia bazy przy pomocy join
      */
     public function bookHasOpinions(Book $book): bool
     {

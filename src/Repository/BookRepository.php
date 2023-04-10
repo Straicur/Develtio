@@ -50,7 +50,8 @@ class BookRepository extends ServiceEntityRepository
     /**
      * @param string|null $title
      * @param string|null $description
-     * @return Book
+     * @return Book[]
+     * Jest to przykład szukania dynamicznego przy pomocy query buildera który ma tą właśnie przewagę nad raw sqlem
      */
     public function findBooksForUser(?string $title = null, ?string $description = null): array
     {
