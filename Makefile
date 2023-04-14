@@ -27,9 +27,7 @@ serverStop:
 	symfony server:stop
 entity:
 	symfony console make:entity
-installTest:
-	./scripts/INSTALL_TEST.sh
-install: installTest tests
+install: tests
 	./scripts/INSTALL.sh
-installNoTest: installTest
+installNoTest:
 	./scripts/INSTALL.sh
